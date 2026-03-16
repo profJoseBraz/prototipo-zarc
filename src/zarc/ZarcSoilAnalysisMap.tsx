@@ -34,14 +34,18 @@ export function ZarcSoilAnalysisMap({
   return (
     <div className="real-map-wrapper">
       <MapContainer
-        center={center}
-        zoom={16}
-        scrollWheelZoom={false}
-        style={{ height: '100%', width: '100%' }}
+        {...({
+          center,
+          zoom: 16,
+          scrollWheelZoom: false,
+          style: { height: '100%', width: '100%' },
+        } as any)}
       >
         <TileLayer
-          attribution="&copy; OpenStreetMap contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          {...({
+            attribution: '&copy; OpenStreetMap contributors',
+            url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          } as any)}
         />
         <ZarcSoilAnalysisContent
           car={car}
@@ -126,13 +130,15 @@ function ZarcSoilAnalysisContent({
       {samplePoints.map(([lat, lng], idx) => (
         <CircleMarker
           key={idx}
-          center={[lat, lng]}
-          radius={selectedIndex === idx ? 7 : 5}
-          pathOptions={{
-            color: selectedIndex === idx ? '#ea580c' : '#f97316',
-            weight: selectedIndex === idx ? 3 : 2,
-            fillOpacity: 0.9,
-          }}
+          {...({
+            center: [lat, lng],
+            radius: selectedIndex === idx ? 7 : 5,
+            pathOptions: {
+              color: selectedIndex === idx ? '#ea580c' : '#f97316',
+              weight: selectedIndex === idx ? 3 : 2,
+              fillOpacity: 0.9,
+            },
+          } as any)}
         />
       ))}
     </>
@@ -144,7 +150,7 @@ interface MapClickHandlerProps {
 }
 
 function MapClickHandler({ onClick }: MapClickHandlerProps) {
-  useMapEvent('click', (e) => {
+  useMapEvent('click', (e: any) => {
     onClick(e.latlng.lat, e.latlng.lng)
   })
   return null

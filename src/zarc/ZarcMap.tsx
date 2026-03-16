@@ -19,14 +19,18 @@ export function ZarcMap({ request }: Props) {
   return (
     <div className="real-map-wrapper">
       <MapContainer
-        center={center}
-        zoom={15}
-        scrollWheelZoom={false}
-        style={{ height: '100%', width: '100%' }}
+        {...({
+          center,
+          zoom: 15,
+          scrollWheelZoom: false,
+          style: { height: '100%', width: '100%' },
+        } as any)}
       >
         <TileLayer
-          attribution="&copy; OpenStreetMap contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          {...({
+            attribution: '&copy; OpenStreetMap contributors',
+            url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          } as any)}
         />
         <ZarcMapContent car={car} talhao={talhao} />
       </MapContainer>

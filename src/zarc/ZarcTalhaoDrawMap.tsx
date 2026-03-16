@@ -59,14 +59,18 @@ export function ZarcTalhaoDrawMap({ property, talhao, onChangeTalhaoPolygon, onT
   return (
     <div className="real-map-wrapper">
       <MapContainer
-        center={center}
-        zoom={15}
-        scrollWheelZoom={true}
-        style={{ height: '100%', width: '100%' }}
+        {...({
+          center,
+          zoom: 15,
+          scrollWheelZoom: true,
+          style: { height: '100%', width: '100%' },
+        } as any)}
       >
         <TileLayer
-          attribution="&copy; OpenStreetMap contributors"
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          {...({
+            attribution: '&copy; OpenStreetMap contributors',
+            url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          } as any)}
         />
         {car && (
           <Polygon
@@ -83,20 +87,22 @@ export function ZarcTalhaoDrawMap({ property, talhao, onChangeTalhaoPolygon, onT
             {tempPolygon.map(([lat, lng], idx) => (
               <CircleMarker
                 key={`${lat}-${lng}-${idx}`}
-                center={[lat, lng]}
-                radius={selectedVertexIndex === idx ? 8 : 6}
-                pathOptions={{
-                  color: selectedVertexIndex === idx ? '#f97316' : '#22c55e',
-                  weight: 2,
-                  fillColor: selectedVertexIndex === idx ? '#fed7aa' : '#bbf7d0',
-                  fillOpacity: 0.9,
-                }}
-                eventHandlers={{
-                  click: (e) => {
-                    e.originalEvent.stopPropagation()
-                    setSelectedVertexIndex(idx)
+                {...({
+                  center: [lat, lng],
+                  radius: selectedVertexIndex === idx ? 8 : 6,
+                  pathOptions: {
+                    color: selectedVertexIndex === idx ? '#f97316' : '#22c55e',
+                    weight: 2,
+                    fillColor: selectedVertexIndex === idx ? '#fed7aa' : '#bbf7d0',
+                    fillOpacity: 0.9,
                   },
-                }}
+                  eventHandlers: {
+                    click: (e: any) => {
+                      e.originalEvent.stopPropagation()
+                      setSelectedVertexIndex(idx)
+                    },
+                  },
+                } as any)}
               />
             ))}
           </>
@@ -134,7 +140,7 @@ interface ClickHandlerProps {
 }
 
 function ClickHandler({ onClick }: ClickHandlerProps) {
-  useMapEvent('click', (e) => {
+  useMapEvent('click', (e: any) => {
     onClick(e.latlng.lat, e.latlng.lng)
   })
   return null

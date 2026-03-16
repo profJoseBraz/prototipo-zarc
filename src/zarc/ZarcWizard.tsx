@@ -208,7 +208,7 @@ export function ZarcWizard({ existing, onCancel, onSave, onFinish }: Props) {
     status,
     dataSolicitacao: existing?.dataSolicitacao ?? new Date().toISOString().slice(0, 10),
     agronomoResponsavel: existing?.agronomoResponsavel ?? base.agronomoResponsavel,
-    produtor: producer,
+    produtor: producer as any,
     propriedade: property,
     talhao,
     analisesSolo: analises,
